@@ -1,7 +1,6 @@
 package clock;
 
 import java.util.Scanner;
-
 import display.Displayable;
 
 public class ClockController {
@@ -17,8 +16,10 @@ public class ClockController {
 		scanner = new Scanner(System.in);
 	}
 
+	// Main method to run the clock controller
 	public void run() {
 		while (true) {
+			// Prints out options for the user
 			System.out.println("""
 					Select an action:
 					1. Show time
@@ -31,6 +32,7 @@ public class ClockController {
 			int choice = scanner.nextInt();
 
 			switch (currentState) {
+			// Show time
 			case DISPLAY_TIME:
 				if (choice == 1) {
 					System.out.println("Current time: " + timeDisplay.getCurrentValue());
@@ -41,6 +43,7 @@ public class ClockController {
 					changeValue(timeDisplay, scanner.nextLine());
 				}
 				break;
+			// Show date
 			case DISPLAY_DATE:
 				if (choice == 2) {
 					System.out.println("Current date: " + dateDisplay.getCurrentValue());
@@ -51,15 +54,16 @@ public class ClockController {
 					changeValue(dateDisplay, scanner.nextLine());
 				}
 				break;
+			// Change time
 			case CHANGE_TIME:
 				System.out.print("Enter new time (HH:mm:ss): ");
 				changeValue(timeDisplay, scanner.nextLine());
 				currentState = ClockStateEnum.DISPLAY_TIME;
 				break;
+			// Change date
 			case CHANGE_DATE:
 				System.out.print("Enter new date (yyyy-MM-dd): ");
-				String newDate = scanner.nextLine();
-				changeValue(dateDisplay, newDate);
+				changeValue(dateDisplay, scanner.nextLine());
 				currentState = ClockStateEnum.DISPLAY_DATE;
 				break;
 			default:
@@ -67,6 +71,7 @@ public class ClockController {
 				break;
 			}
 
+			// Quit the program
 			if (choice == 5) {
 				System.out.println("Quitting...");
 				scanner.close();
@@ -75,6 +80,7 @@ public class ClockController {
 		}
 	}
 
+	// Method to change the value of a Displayable object and update the state
 	public void changeValue(Displayable display, String newValue) {
 		if (display.setValue(newValue)) {
 			currentState = (display == timeDisplay) ? ClockStateEnum.DISPLAY_TIME : ClockStateEnum.DISPLAY_DATE;

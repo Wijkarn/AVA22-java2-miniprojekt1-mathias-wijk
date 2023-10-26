@@ -15,19 +15,23 @@ public class DisplayDate implements Displayable {
 		currentDate = new Date();
 	}
 
+	// Method to get the current date as a string in the specified format
 	public String getCurrentValue() {
 		return dateFormat.format(currentDate);
 	}
 
+	// Method to set a new date value based on the provided input string
 	public boolean setValue(String inputDate) {
 		try {
+			// If user input is valid it will return true
 			SimpleDateFormat newDate = new SimpleDateFormat("yyyy-MM-dd");
 			newDate.setLenient(false);
 			currentDate = newDate.parse(inputDate);
 			return true;
 		} catch (ParseException e) {
 			System.out.println("Invalid date. Please use the format yyyy-MM-dd.");
-			return false;
 		}
+		// Return false for unsuccessful update
+		return false; 
 	}
 }
